@@ -131,12 +131,9 @@ export default function Home() {
       />
       
       <div className="py-12">
-        <h2 className="text-3xl font-bold mb-8">SIP Statistics</h2>
         <StatisticsCards sips={sips} loading={loading} />
         
         <div className="mt-12">
-          <h2 className="text-3xl font-bold mb-8">All SIPs</h2>
-          
           {/* Filters Section */}
           <div className="mb-8">
             <FiltersSection
