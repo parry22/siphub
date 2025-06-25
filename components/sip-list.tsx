@@ -581,7 +581,7 @@ export function SipList({ sips, loading, error }: SipListProps) {
                       </Badge>
                     ) : null}
                     <div className="flex items-center gap-1">
-                      <GitPullRequest className="h-4 w-4" />#{sip.number}
+                      SIP:{sip.number}
                     </div>
                   </div>
                 </div>

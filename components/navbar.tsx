@@ -2,36 +2,9 @@
 
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Download } from "lucide-react"
-import { useCallback } from "react"
-import { exportToExcel } from "@/lib/utils"
+import { Github } from "lucide-react"
 
 export function Navbar() {
-  // Function to handle download
-  const handleDownload = useCallback(async () => {
-    try {
-      // Fetch SIPs data
-      const response = await fetch('/api/sips');
-      if (!response.ok) {
-        throw new Error('Failed to fetch SIPs');
-      }
-      const sips = await response.json();
-      
-      // Generate Excel data
-      const excelData = exportToExcel(sips);
-      
-      // Create and trigger download
-      const link = document.createElement("a");
-      link.href = excelData;
-      link.download = "sips-data.csv";
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (error) {
-      console.error("Error downloading SIPs data:", error);
-    }
-  }, []);
-
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-16 items-center justify-between">
@@ -44,9 +17,11 @@ export function Navbar() {
           </Link>
         </div>
         <div className="flex items-center gap-2">
-          <Button variant="outline" size="sm" onClick={handleDownload} className="flex items-center gap-2">
-            <Download className="h-4 w-4" />
-            <span className="hidden sm:inline">Download SIPs</span>
+          <Button variant="outline" size="sm" asChild className="flex items-center gap-2">
+            <Link href="https://github.com/sui-foundation/sips" target="_blank" rel="noopener noreferrer">
+              <Github className="h-4 w-4" />
+              <span className="hidden sm:inline">Go to Github</span>
+            </Link>
           </Button>
         </div>
       </div>

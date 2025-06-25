@@ -178,8 +178,7 @@ function HeroGeometric({
                         animate="visible"
                     >
                         <p className="text-base sm:text-lg text-white/40 mb-6 leading-relaxed font-light tracking-wide max-w-xl mx-auto px-4">
-                            Find all SIPs proposed and discussed in
-                            Sui Ecosystem at one place
+                            Discover all Sui Improvement Proposals (SIPs) – ideas and enhancements shaping the Sui Ecosystem in one place.
                         </p>
                     </motion.div>
                 </div>
