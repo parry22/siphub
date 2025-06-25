@@ -93,7 +93,7 @@ function HeroGeometric({
     };
 
     return (
-        <div className="relative md:min-h-[60vh] min-h-[50vh] w-full flex items-center justify-center overflow-hidden bg-[#030303] -mx-4 md:-mx-6">
+        <div className="relative md:min-h-[60vh] min-h-[50vh] w-full flex items-center justify-center overflow-hidden bg-[#030303]">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500/[0.05] via-transparent to-cyan-500/[0.05] blur-3xl" />
 
             <div className="absolute inset-0 overflow-hidden">
@@ -143,7 +143,7 @@ function HeroGeometric({
                 />
             </div>
 
-            <div className="relative z-10 container mx-auto px-4 md:px-6">
+            <div className="relative z-10 w-full px-4 md:px-6">
                 <div className="max-w-3xl mx-auto text-center">
                     <motion.div
                         custom={0}
