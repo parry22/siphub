@@ -43,7 +43,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const apiKey = process.env.GROQ_API_KEY || "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"
+    const apiKey = process.env.GROQ_API_KEY || ""
 
     if (!apiKey) {
       console.error("Summary API: GROQ API key not configured")

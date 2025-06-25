@@ -2,7 +2,8 @@
 import { NextRequest, NextResponse } from "next/server"
 import { fetchPRDetailsCached, fetchSipContentCached } from "@/lib/github-api"
 
-const GROQ_API_KEY = "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"
+// Use environment variable instead of hardcoded API key
+const GROQ_API_KEY = process.env.GROQ_API_KEY || ""
 
 async function generateGroqSummary(sipId: string, content: string, title: string): Promise<string> {
   try {
@@ -67,7 +68,7 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const id = params.id
+  const id = params?.id
   
   try {
     console.log(`API route: Generating AI summary for SIP ${id}...`)

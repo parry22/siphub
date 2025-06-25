@@ -6,9 +6,9 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  // Ensure params is properly handled as an async context
-  const id = params.id
   try {
+    // Properly handle params in async context
+    const id = params?.id
     console.log(`API route: Fetching comments for SIP ${id}...`)
     
     // Try to fetch from GitHub API
