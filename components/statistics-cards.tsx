@@ -66,7 +66,7 @@ export function StatisticsCards({ sips, loading }: StatisticsCardsProps) {
       {/* 2 columns on mobile (2x2 grid), 4 columns on desktop (1x4 grid) */}
       <Card className="transition-all hover:shadow-sm">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-xs sm:text-sm font-medium leading-tight">Total SIPs</CardTitle>
+          <CardTitle className="text-xs sm:text-sm font-medium leading-tight">Total Proposals</CardTitle>
         </CardHeader>
         <CardContent className="pt-0">
           <div className="text-xl sm:text-2xl font-bold">{statusCounts.total}</div>
@@ -76,7 +76,7 @@ export function StatisticsCards({ sips, loading }: StatisticsCardsProps) {
       <Card className="transition-all hover:shadow-sm">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
           <CardTitle className="text-xs sm:text-sm font-medium flex items-center gap-1.5 leading-tight">
-            <span>Open SIPs</span>
+            <span>Open Proposals</span>
             <div className="relative">
               <div className="h-1.5 w-1.5 bg-green-500 rounded-full animate-pulse"></div>
               <div className="absolute top-0 left-0 h-1.5 w-1.5 bg-green-500 rounded-full animate-ping"></div>
@@ -90,17 +90,17 @@ export function StatisticsCards({ sips, loading }: StatisticsCardsProps) {
 
       <Card className="transition-all hover:shadow-sm">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-xs sm:text-sm font-medium leading-tight">Closed SIPs</CardTitle>
+          <CardTitle className="text-xs sm:text-sm font-medium leading-tight">Closed Proposals</CardTitle>
         </CardHeader>
         <CardContent className="pt-0">
           <div className="text-xl sm:text-2xl font-bold text-red-600">{statusCounts.closed}</div>
         </CardContent>
       </Card>
 
-      {/* Merged SIPs Card - NO ICON in stats */}
+      {/* Merged Proposals Card - NO ICON in stats */}
       <Card className="transition-all hover:shadow-sm">
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-xs sm:text-sm font-medium leading-tight">Merged SIPs</CardTitle>
+          <CardTitle className="text-xs sm:text-sm font-medium leading-tight">Merged Proposals</CardTitle>
         </CardHeader>
         <CardContent className="pt-0">
           <div className="text-xl sm:text-2xl font-bold text-purple-600">{statusCounts.merged}</div>

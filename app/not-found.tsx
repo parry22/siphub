@@ -9,7 +9,7 @@ export default function NotFound() {
       <h1 className="text-4xl font-bold">SIP Not Found</h1>
       <p className="text-xl text-muted-foreground">The Sui Improvement Proposal you're looking for doesn't exist.</p>
       <Link href="/">
-        <Button>Return to SIPs List</Button>
+        <Button>Return to Sui Digest</Button>
       </Link>
     </div>
   )

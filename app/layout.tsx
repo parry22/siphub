@@ -9,7 +9,7 @@ import { Toaster } from "@/components/ui/toaster"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "SIPs Hub",
+  title: "Sui Digest",
   description: "Track and explore Sui Improvement Proposals",
   icons: {
     icon: "/favicon.svg",
@@ -17,14 +17,14 @@ export const metadata: Metadata = {
     apple: "/favicon.svg",
   },
   openGraph: {
-    title: "SIPs Hub",
+    title: "Sui Digest",
     description: "Track and explore Sui Improvement Proposals",
     images: [
       {
         url: "/opengraph-image", // served by dynamic OG route
         width: 1200,
         height: 630,
-        alt: "SIPs Hub",
+        alt: "Sui Digest",
       },
     ],
   },
@@ -33,10 +33,10 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/opengraph-image",
-        alt: "SIPs Hub",
+        alt: "Sui Digest",
       },
     ],
-    title: "SIPs Hub",
+    title: "Sui Digest",
     description: "Track and explore Sui Improvement Proposals",
   },
 }

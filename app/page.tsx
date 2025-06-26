@@ -126,7 +126,7 @@ export default function Home() {
   return (
     <div>
       <HeroGeometric 
-        badge="SIPs Hub"
+        badge="Sui Digest"
         title1="Keep Track Of Sui Ecosystem"
       />
       

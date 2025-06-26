@@ -28,7 +28,7 @@ export default function OpengraphImage() {
           fontFamily: 'Bricolage Grotesque, Inter, sans-serif',
         }}
       >
-        SIPs Hub
+        Sui Digest
       </div>
     ),
     {

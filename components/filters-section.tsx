@@ -72,7 +72,7 @@ export function FiltersSection({
       {/* Results Summary */}
       <div className="flex items-center justify-between pt-2">
         <p className="text-sm text-muted-foreground">
-          Showing {filteredCount} of {totalCount} SIPs
+          Showing {filteredCount} of {totalCount} Proposals
           {searchQuery && <span> matching "{searchQuery}"</span>}
           {selectedCategories.length > 0 && <span> with categories: {selectedCategories.join(", ")}</span>}
           {selectedLabels.length > 0 && (

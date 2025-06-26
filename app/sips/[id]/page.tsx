@@ -29,7 +29,7 @@ export async function generateMetadata({ params }: SipPageProps): Promise<Metada
   }
   
   return {
-    title: `${sipDetails.title} | SIPs Hub`,
+    title: `${sipDetails.title} | Sui Digest`,
     description: sipDetails.body?.substring(0, 160) || "No description available.",
   }
 }

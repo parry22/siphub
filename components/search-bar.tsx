@@ -18,7 +18,7 @@ export function SearchBar({ searchQuery, setSearchQuery }: SearchBarProps) {
       <Search className="absolute left-2.5 h-4 w-4 text-muted-foreground" />
       <Input
         type="search"
-        placeholder="Search SIPs..."
+        placeholder="Search Sui Digest..."
         className="pl-9 pr-10 h-10"
         value={searchQuery}
         onChange={(e) => setSearchQuery(e.target.value)}
