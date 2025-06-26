@@ -199,7 +199,6 @@ function HeroGeometric({
                                 <LiquidButton 
                                     size="lg" 
                                     className="text-white text-sm sm:text-base font-medium"
-                                    onClick={() => setIsOpen(true)}
                                 >
                                     What is a SIP?
                                 </LiquidButton>
