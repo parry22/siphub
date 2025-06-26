@@ -120,8 +120,7 @@ export default async function SipPage({ params }: SipPageProps) {
           </div>
           
           {/* Comments section */}
-          <div className="mt-8">
-            <h2 className="text-xl font-semibold mb-4">Discussion</h2>
+          <div className="mt-10 pt-6 border-t">
             <SipDiscussion comments={comments} />
           </div>
         </div>

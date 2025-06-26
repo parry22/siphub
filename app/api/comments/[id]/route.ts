@@ -4,11 +4,11 @@ import { fetchComments } from "@/lib/github-api"
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
     // Properly handle params in async context
-    const id = params.id
+    const { id } = context.params
     console.log(`API route: Fetching comments for SIP ${id}...`)
     
     // Try to fetch from GitHub API

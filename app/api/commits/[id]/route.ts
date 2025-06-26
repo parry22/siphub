@@ -3,10 +3,10 @@ import { fetchCommits } from "@/lib/github-api"
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
-  // Ensure params is properly handled as an async context
-  const id = await Promise.resolve(params.id)
+  // Properly access the id parameter from context
+  const { id } = context.params
   try {
     console.log(`API route: Fetching commits for SIP ${id}...`)
     

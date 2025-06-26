@@ -713,12 +713,22 @@ function stripSipMetadataTable(content: string): string {
   let metadataStart = -1
   let metadataEnd = -1
 
-  // Locate the first line that begins the metadata table. We specifically look for
-  // the canonical first cell "| SIP-Number" but fall back to any line that starts
-  // with a pipe character if that is not found (to be future-proof).
-  for (let i = 0; i < lines.length; i++) {
+  // Locate the first line that begins the metadata table. We look for various patterns
+  // that might indicate the start of a SIP metadata table
+  for (let i = 0; i < Math.min(20, lines.length); i++) {
     const trimmed = lines[i].trim()
-    if (trimmed.startsWith("| SIP-Number") || trimmed.startsWith("|SIP-Number")) {
+    if (
+      trimmed.startsWith("| SIP-Number") || 
+      trimmed.startsWith("|SIP-Number") ||
+      trimmed.startsWith("| Title") ||
+      (trimmed.startsWith("|") && i < 15 && lines.slice(i, i+5).some(l => 
+        l.trim().includes("SIP-Number") || 
+        l.trim().includes("Title") || 
+        l.trim().includes("Author") || 
+        l.trim().includes("Type") || 
+        l.trim().includes("Category")
+      ))
+    ) {
       metadataStart = i
       break
     }
@@ -738,9 +748,17 @@ function stripSipMetadataTable(content: string): string {
       metadataEnd = i
       continue
     }
+    
     // Stop at first non-table, non-empty line (but allow one blank line after table).
     if (trimmed === "") {
       metadataEnd = i
+      // Check if the next line is also blank or starts a new section
+      if (i + 1 < lines.length) {
+        const nextLine = lines[i + 1].trim()
+        if (nextLine === "" || nextLine.startsWith("#")) {
+          metadataEnd = i + 1
+        }
+      }
     }
     break
   }

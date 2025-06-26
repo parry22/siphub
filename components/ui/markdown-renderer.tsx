@@ -10,39 +10,30 @@ interface MarkdownRendererProps {
 }
 
 export function MarkdownRenderer({ content, className }: MarkdownRendererProps) {
-  // Extract and format the SIP metadata table if present
+  // Remove SIP metadata table if present
   const formattedContent = React.useMemo(() => {
     if (!content) return '';
     
-    // Check if content starts with a markdown table
-    if (content.trim().startsWith('|') && content.includes('| SIP-Number |')) {
+    // Check if content starts with a markdown table that looks like a SIP metadata table
+    if (content.trim().startsWith('|') && 
+        (content.includes('| SIP-Number |') || 
+         content.includes('|SIP-Number|') || 
+         content.includes('| Title |'))) {
+      
       // Find where the table ends (usually after a blank line)
       const parts = content.split('\n\n');
       const tableSection = parts[0];
       const restOfContent = parts.slice(1).join('\n\n');
       
-      // Parse the table rows
-      const rows = tableSection.split('\n')
-        .filter(line => line.trim() && !line.includes('---'))
-        .map(line => {
-          // Extract key and value from the table row
-          const match = line.match(/\|\s*([^|]+)\s*\|\s*([^|]*)\s*\|/);
-          if (match && match.length >= 3) {
-            const key = match[1].trim();
-            const value = match[2].trim();
-            return { key, value };
-          }
-          return null;
-        })
-        .filter(Boolean);
+      // Check if this is indeed a SIP metadata table by looking for key patterns
+      const isSipMetadataTable = tableSection.includes('SIP-Number') || 
+                                (tableSection.includes('Title') && 
+                                 tableSection.includes('Author') && 
+                                 tableSection.includes('Type'));
       
-      // Format as a simple list instead of a table
-      if (rows.length > 0) {
-        const formattedTable = rows.map(row => 
-          `**${row.key}:** ${row.value}`
-        ).join('\n\n');
-        
-        return formattedTable + '\n\n---\n\n' + restOfContent;
+      if (isSipMetadataTable) {
+        // Remove the table completely
+        return restOfContent;
       }
     }
     
