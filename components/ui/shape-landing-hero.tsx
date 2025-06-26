@@ -169,10 +169,8 @@ function HeroGeometric({
                         initial="hidden"
                         animate="visible"
                     >
-                        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 md:mb-6 tracking-tight">
-                            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-300 via-cyan-200 to-teal-300">
-                                {title1}
-                            </span>
+                        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 md:mb-6 tracking-tight text-white">
+                            {title1}
                         </h1>
                     </motion.div>
 
@@ -219,8 +217,8 @@ function HeroGeometric({
                                 <div style={{ position: "relative", aspectRatio: "16/9" }}>
                                     <iframe 
                                         loading="lazy" 
-                                        title="What is a SIP? Video Explanation"
-                                        src="https://play.gumlet.io/embed/685d511e946bf1574dd11312?preload=true&autoplay=true&loop=false&background=false&disable_player_controls=false"
+                                        title="Gumlet video player"
+                                        src="https://play.gumlet.io/embed/685d511e946bf1574dd11312?preload=false&autoplay=false&loop=false&background=false&disable_player_controls=false"
                                         style={{ border: "none", position: "absolute", top: 0, left: 0, height: "100%", width: "100%" }}
                                         allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen;"
                                         aria-label="Video explaining what SIPs are"
