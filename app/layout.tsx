@@ -11,6 +11,34 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "SIPs Hub",
   description: "Track and explore Sui Improvement Proposals",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
+  openGraph: {
+    title: "SIPs Hub",
+    description: "Track and explore Sui Improvement Proposals",
+    images: [
+      {
+        url: "/opengraph-image", // served by dynamic OG route
+        width: 1200,
+        height: 630,
+        alt: "SIPs Hub",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    images: [
+      {
+        url: "/opengraph-image",
+        alt: "SIPs Hub",
+      },
+    ],
+    title: "SIPs Hub",
+    description: "Track and explore Sui Improvement Proposals",
+  },
 }
 
 export default function RootLayout({
@@ -38,7 +66,7 @@ export default function RootLayout({
         >
           <div className="min-h-screen bg-background">
             <Navbar />
-            <main className="container mx-auto py-6 px-4 md:px-6">{children}</main>
+            <main>{children}</main>
           </div>
           <Toaster />
         </ThemeProvider>

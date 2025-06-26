@@ -18,7 +18,7 @@ interface SipPageProps {
 }
 
 export async function generateMetadata({ params }: SipPageProps): Promise<Metadata> {
-  const id = params?.id
+  const id = params.id
   const sipDetails = await fetchSipDetailsCached(id)
   
   if (!sipDetails) {
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: SipPageProps): Promise<Metada
 }
 
 export default async function SipPage({ params }: SipPageProps) {
-  const id = params?.id
+  const id = params.id
   
   // Fetch all data in parallel
   const prPromise = fetchSipDetailsCached(id)

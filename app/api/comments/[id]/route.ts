@@ -8,7 +8,7 @@ export async function GET(
 ) {
   try {
     // Properly handle params in async context
-    const id = params?.id
+    const id = params.id
     console.log(`API route: Fetching comments for SIP ${id}...`)
     
     // Try to fetch from GitHub API

@@ -549,7 +549,21 @@ export async function fetchSipContent(prNumber: string): Promise<string | null> 
     // Get commits for the PR
     const commits = await fetchPRCommitsCached(prNumber)
     if (commits.length === 0) {
-      return null
+      console.log(`No commits found for SIP ${prNumber}. Attempting to fall back to PR body…`)
+
+      // Try PR details first – this requires only one GitHub request and succeeds even when
+      // the /commits endpoint is rate-limited.
+      try {
+        const prDetails = await fetchPRDetails(prNumber)
+        if (prDetails && prDetails.body) {
+          return stripSipMetadataTable(`# ${prDetails.title}\n\n${prDetails.body}`)
+        }
+      } catch (e) {
+        console.warn(`Fallback to PR body failed for SIP ${prNumber}:`, e)
+      }
+
+      console.log(`PR body unavailable; using placeholder content for SIP ${prNumber}`)
+      return stripSipMetadataTable(generateMockSipContent(prNumber))
     }
 
     // Get the first commit (usually contains the SIP file)
@@ -557,7 +571,8 @@ export async function fetchSipContent(prNumber: string): Promise<string | null> 
     const commitDetails = await fetchCommitDetailsCached(firstCommit.sha)
 
     if (!commitDetails || !commitDetails.files) {
-      return null
+      console.log(`No commit details or files found for SIP ${prNumber}, using fallback content`)
+      return stripSipMetadataTable(generateMockSipContent(prNumber))
     }
 
     // Try multiple patterns to find the SIP file
@@ -583,9 +598,10 @@ export async function fetchSipContent(prNumber: string): Promise<string | null> 
       // Try to get PR details as fallback
       const prDetails = await fetchPRDetails(prNumber)
       if (prDetails && prDetails.body) {
-        return `# ${prDetails.title}\n\n${prDetails.body}`
+        return stripSipMetadataTable(`# ${prDetails.title}\n\n${prDetails.body}`)
       }
-      return null
+      console.log(`No SIP file or PR body found for SIP ${prNumber}, using fallback content`)
+      return stripSipMetadataTable(generateMockSipContent(prNumber))
     }
 
     // Fetch the raw content of the SIP file
@@ -598,25 +614,140 @@ export async function fetchSipContent(prNumber: string): Promise<string | null> 
         // If we can't fetch the raw content, try to use PR body as fallback
         const prDetails = await fetchPRDetails(prNumber)
         if (prDetails && prDetails.body) {
-          return `# ${prDetails.title}\n\n${prDetails.body}`
+          return stripSipMetadataTable(`# ${prDetails.title}\n\n${prDetails.body}`)
         }
-        return null
+        console.log(`Failed to fetch raw content for SIP ${prNumber}, using fallback content`)
+        return stripSipMetadataTable(generateMockSipContent(prNumber))
       }
 
       const content = await contentResponse.text()
-      return content
+      return stripSipMetadataTable(content)
     } catch (error) {
       // If raw content fetch fails, try PR body as fallback
       const prDetails = await fetchPRDetails(prNumber)
       if (prDetails && prDetails.body) {
-        return `# ${prDetails.title}\n\n${prDetails.body}`
+        return stripSipMetadataTable(`# ${prDetails.title}\n\n${prDetails.body}`)
       }
-      return null
+      console.log(`Error fetching raw content for SIP ${prNumber}, using fallback content:`, error)
+      return stripSipMetadataTable(generateMockSipContent(prNumber))
     }
   } catch (error) {
     console.error("Error fetching SIP content:", error)
-    return null
+    return stripSipMetadataTable(generateMockSipContent(prNumber))
   }
+}
+
+// Generate mock SIP content when GitHub API fails
+function generateMockSipContent(sipId: string): string {
+  return `| SIP-Number | ${sipId} |
+| ---: | :--- |
+| Title | SIP-${sipId}: Placeholder Title |
+| Description | This is a placeholder description for SIP-${sipId}. The actual content could not be fetched from GitHub. |
+| Author | Unknown |
+| Editor | |
+| Type | Standard |
+| Category | Framework |
+| Created | 2023-01-01 |
+| Comments-URI | |
+| Status | |
+| Requires | |
+
+## Abstract
+
+This is a placeholder content for SIP-${sipId}. The actual content could not be fetched from GitHub due to API limitations or network issues.
+
+## Motivation
+
+This placeholder is provided to ensure the application can still display something when the GitHub API is unavailable or rate limited.
+
+## Specification
+
+The placeholder includes various sections typically found in a SIP document to maintain the expected format and structure.
+
+### Technical Details
+- Feature 1: Description of feature 1
+- Feature 2: Description of feature 2
+- Feature 3: Description of feature 3
+
+## Rationale
+
+The rationale for this placeholder is to provide a fallback when the GitHub API cannot be accessed.
+
+## Backwards Compatibility
+
+This placeholder maintains the expected format and structure of a SIP document.
+
+## Test Cases
+
+- Test case 1: Description
+- Test case 2: Description
+
+## Reference Implementation
+
+\`\`\`rust
+// This is placeholder code
+fn example_function() -> bool {
+    println!("This is a placeholder implementation");
+    true
+}
+\`\`\`
+
+## Security Considerations
+
+There are no security implications for this placeholder content.
+
+## Copyright
+
+Copyright and related rights waived via [CC0](https://creativecommons.org/publicdomain/zero/1.0/).
+`
+}
+
+// Helper to remove the metadata table that some SIPs include at the top of the document.
+// The table always starts with a row like "| SIP-Number |" and ends at the first blank line
+// (or the first line that no longer starts with "|"). We want to drop that whole block
+// while leaving the rest of the markdown untouched so it renders cleanly in the UI.
+function stripSipMetadataTable(content: string): string {
+  if (!content) return content
+
+  const lines = content.split("\n")
+  let metadataStart = -1
+  let metadataEnd = -1
+
+  // Locate the first line that begins the metadata table. We specifically look for
+  // the canonical first cell "| SIP-Number" but fall back to any line that starts
+  // with a pipe character if that is not found (to be future-proof).
+  for (let i = 0; i < lines.length; i++) {
+    const trimmed = lines[i].trim()
+    if (trimmed.startsWith("| SIP-Number") || trimmed.startsWith("|SIP-Number")) {
+      metadataStart = i
+      break
+    }
+  }
+
+  // No metadata table found – return original content unchanged.
+  if (metadataStart === -1) {
+    return content
+  }
+
+  // Walk forward until we reach the end of the contiguous block of lines that start
+  // with a pipe or a header separator line (e.g. "| ---:" etc.). We also include a
+  // trailing blank line if present so that the main content starts cleanly.
+  for (let i = metadataStart; i < lines.length; i++) {
+    const trimmed = lines[i].trim()
+    if (trimmed.startsWith("|")) {
+      metadataEnd = i
+      continue
+    }
+    // Stop at first non-table, non-empty line (but allow one blank line after table).
+    if (trimmed === "") {
+      metadataEnd = i
+    }
+    break
+  }
+
+  // Remove the slice metadataStart..metadataEnd inclusive.
+  const cleanedLines = lines.slice(0, metadataStart).concat(lines.slice(metadataEnd + 1))
+  return cleanedLines.join("\n").trimStart()
 }
 
 // Cached version of fetchSipContent

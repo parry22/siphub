@@ -59,4 +59,5 @@ export const sipCategories: Record<number, SIPCategory> = {
   56: "Wallet UX & Security",
   57: "Staking & Liquid Staking",
   58: "Interop",
+  59: "Core / Object Lifecycle",
 }

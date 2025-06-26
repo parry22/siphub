@@ -68,7 +68,7 @@ export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
-  const id = params?.id
+  const id = params.id
   
   try {
     console.log(`API route: Generating AI summary for SIP ${id}...`)

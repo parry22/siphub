@@ -130,7 +130,7 @@ export default function Home() {
         title1="Keep Track Of Sui Ecosystem"
       />
       
-      <div className="py-12">
+      <div className="container mx-auto py-12 px-4 md:px-6">
         <StatisticsCards sips={sips} loading={loading} />
         
         <div className="mt-12">
