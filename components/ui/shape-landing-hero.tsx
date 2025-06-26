@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 import { Circle } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { LiquidButton } from "@/components/ui/liquid-glass-button";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import { VideoModal } from "@/components/video-modal";
 
 function ElegantShape({
     className,
@@ -94,8 +94,6 @@ function HeroGeometric({
             },
         }),
     };
-
-    const [isOpen, setIsOpen] = React.useState(false);
 
     return (
         <div className="relative md:min-h-[60vh] min-h-[50vh] w-screen flex items-center justify-center overflow-hidden bg-[#030303]">
@@ -192,40 +190,16 @@ function HeroGeometric({
                         animate="visible"
                         className="mt-4"
                     >
-                        <Dialog open={isOpen} onOpenChange={setIsOpen}>
-                            <DialogTrigger asChild>
+                        <VideoModal
+                            trigger={
                                 <LiquidButton 
                                     size="lg" 
                                     className="text-white text-sm sm:text-base font-medium"
                                 >
                                     What is a SIP?
                                 </LiquidButton>
-                            </DialogTrigger>
-                            <DialogContent className="sm:max-w-[800px] p-0 bg-black border-gray-800 relative">
-                                <div className="absolute top-2 right-2 z-50">
-                                    <button 
-                                        onClick={() => setIsOpen(false)}
-                                        className="flex h-8 w-8 items-center justify-center rounded-full bg-black/60 hover:bg-black/80 border border-white/10 text-white transition-colors"
-                                        aria-label="Close video"
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                            <path d="M18 6 6 18" />
-                                            <path d="m6 6 12 12" />
-                                        </svg>
-                                    </button>
-                                </div>
-                                <div style={{ position: "relative", aspectRatio: "16/9" }}>
-                                    <iframe 
-                                        loading="lazy" 
-                                        title="Gumlet video player"
-                                        src="https://play.gumlet.io/embed/685d511e946bf1574dd11312?preload=false&autoplay=false&loop=false&background=false&disable_player_controls=false"
-                                        style={{ border: "none", position: "absolute", top: 0, left: 0, height: "100%", width: "100%" }}
-                                        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen;"
-                                        aria-label="Video explaining what SIPs are"
-                                    />
-                                </div>
-                            </DialogContent>
-                        </Dialog>
+                            }
+                        />
                     </motion.div>
                     
                     <motion.div
