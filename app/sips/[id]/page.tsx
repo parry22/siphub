@@ -75,8 +75,8 @@ export default async function SipPage({ params }: SipPageProps) {
             <div className="flex justify-between items-start">
               <div>
                 <h1 className="text-2xl md:text-3xl font-bold">{pr.title}</h1>
-                <div className="mt-2 flex flex-col sm:flex-row sm:items-center gap-2 text-muted-foreground">
-                  <span className="flex items-center gap-1">
+                <div className="mt-2 flex flex-col sm:flex-row sm:items-center gap-3 text-muted-foreground">
+                  <span className="flex items-center gap-1 mb-2 sm:mb-0">
                     <CalendarIcon className="h-4 w-4" /> Created {createdAt}
                   </span>
                   <span className="hidden sm:inline">•</span>
