@@ -4,10 +4,10 @@ import { fetchSipContent, extractSipDescription } from "@/lib/github-api"
 
 export async function GET(
   request: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
-  const { id } = context.params
   try {
+    const { id } = params
     console.log(`API route: Fetching content for SIP ${id}...`)
     
     // Try to fetch from GitHub API

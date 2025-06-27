@@ -3,13 +3,16 @@ export type SIPStatus = "Approved" | "Live" | "Draft" | "Review"
 export type SIPCategory =
   | "Dev Tools"
   | "Wallet UX & Security"
-  | "Governance / Process"
+  | "Governance"
+  | "Process"
   | "Staking & Liquid Staking"
-  | "Gas / Economics"
-  | "Core / Storage"
+  | "Gas"
+  | "Economics"
+  | "Core"
+  | "Storage"
   | "Crypto Primitives"
   | "Staking & Validators"
-  | "Core / Object Lifecycle"
+  | "Object Lifecycle"
   | "Networking & Mempool"
   | "Interop"
 
@@ -80,13 +83,16 @@ export function mapGitHubStatusToSipStatus(pr: GitHubPR): SIPStatus {
 export const categories: SIPCategory[] = [
   "Dev Tools",
   "Wallet UX & Security",
-  "Governance / Process",
+  "Governance",
+  "Process",
   "Staking & Liquid Staking",
-  "Gas / Economics",
-  "Core / Storage",
+  "Gas",
+  "Economics",
+  "Core",
+  "Storage",
   "Crypto Primitives",
   "Staking & Validators",
-  "Core / Object Lifecycle",
+  "Object Lifecycle",
   "Networking & Mempool",
   "Interop",
 ]

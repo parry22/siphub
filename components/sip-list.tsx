@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { ExternalLink, ArrowRight, GitPullRequest, AlertCircle, MessageCircle, GitMerge } from "lucide-react"
-import { sipCategories } from "@/lib/sip-categories"
+import { getCategoriesForSip } from "@/lib/utils"
 import type { SIPCategory } from "@/lib/data"
 
 interface GitHubPR {
@@ -343,12 +343,7 @@ export function SipList({ sips, loading, error }: SipListProps) {
     })
   }
 
-  // Helper to get category from the explicit mapping
-  const getSipCategory = (sipNumber: number): SIPCategory | undefined => {
-    return sipCategories[sipNumber]
-  }
-
-  // Get category badge with black fill and white stroke
+  // Helper to get category badge with black fill and white stroke
   const getCategoryBadge = (category: SIPCategory) => {
     return (
       <Badge
@@ -555,10 +550,6 @@ export function SipList({ sips, loading, error }: SipListProps) {
           const isLoadingComments = !hasTotal && fetchedCount === undefined
           const commentCount = hasTotal ? sip.total_comments! : fetchedCount ?? 0
 
-          const sipCategory = getSipCategory(sip.number)
-          // Prioritize manual description, then PR body
-          const rawDescription = getSipPageDescription(sip.number) || sip.body
-
           const sipDescription = sipDescriptions[sip.number]
           const isLoadingSipContent = fetchingSipContent.has(sip.number)
           const displayDescription = sipDescription
@@ -603,8 +594,17 @@ export function SipList({ sips, loading, error }: SipListProps) {
                   <span>by {sip.user.login}</span>
                 </div>
 
-                {/* Category badge with black fill and white stroke */}
-                {sipCategory && <div className="mb-3">{getCategoryBadge(sipCategory)}</div>}
+                {/* Category Badges */}
+                {(() => {
+                  const cats = getCategoriesForSip(sip as any)
+                  return cats.length ? (
+                    <div className="flex flex-wrap gap-1 mb-2 md:mb-0">
+                      {cats.map((c) => (
+                        <div key={c}>{getCategoryBadge(c)}</div>
+                      ))}
+                    </div>
+                  ) : null
+                })()}
 
                 <div className="flex flex-wrap gap-1 mb-2">
                   {sip.labels.slice(0, 3).map((label) => (

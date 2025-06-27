@@ -6,7 +6,7 @@ import { SipList } from "@/components/sip-list"
 import { StatisticsCards } from "@/components/statistics-cards"
 import { FiltersSection } from "@/components/filters-section"
 import { categories } from "@/lib/data"
-import { sipCategories } from "@/lib/sip-categories"
+import { getCategoriesForSip } from "@/lib/utils"
 
 interface GitHubPR {
   id: number
@@ -116,8 +116,10 @@ export default function Home() {
       }
 
       // Category filter - matches if SIP's category is in selected categories
+      const sipCategoriesArr = getCategoriesForSip(sip as any)
       const categoryMatch =
-        selectedCategories.length === 0 || selectedCategories.includes(sipCategories[sip.number] || "")
+        selectedCategories.length === 0 ||
+        sipCategoriesArr.some((cat: string) => selectedCategories.includes(cat))
 
       return searchMatch && labelMatch && statusMatch && categoryMatch
     })

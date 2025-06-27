@@ -66,11 +66,11 @@ Keep your response concise and focused. Format your response in Markdown.
 
 export async function GET(
   request: NextRequest,
-  context: { params: { id: string } }
+  { params }: { params: { id: string } }
 ) {
-  const { id } = context.params
-  
   try {
+    const { id } = params
+    
     console.log(`API route: Generating AI summary for SIP ${id}...`)
     
     // Fetch SIP details and content
