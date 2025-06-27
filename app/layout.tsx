@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     description: "Track and explore Sui Improvement Proposals",
     images: [
       {
-        url: "/opengraph-image", // served by dynamic OG route
+        url: "/socials.png",
         width: 1200,
         height: 630,
         alt: "Sui Digest",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     images: [
       {
-        url: "/opengraph-image",
+        url: "/socials.png",
         alt: "Sui Digest",
       },
     ],
@@ -56,6 +56,8 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap"
           rel="stylesheet"
         />
+        {/* Add favicon */}
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
       </head>
       <body className={inter.className} suppressHydrationWarning>
         <ThemeProvider
