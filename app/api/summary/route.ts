@@ -1,5 +1,8 @@
 import { type NextRequest, NextResponse } from "next/server"
 
+// Add dynamic export to prevent static export error
+export const dynamic = 'force-dynamic'
+
 export async function POST(request: NextRequest) {
   try {
     console.log("Summary API: Request received")
@@ -73,11 +76,11 @@ export async function POST(request: NextRequest) {
             {
               role: "system",
               content:
-                "You are a helpful assistant that creates concise, friendly summaries of Sui Improvement Proposals (SIPs). Write in plain English and explain the potential impact on the Sui ecosystem. Keep summaries under 120 words.",
+                "You are a helpful assistant specializing in Sui Improvement Proposals (SIPs). You provide concise, accurate answers about SIPs, their technical details, and their impact on the Sui blockchain ecosystem. Answer questions in a friendly, informative manner. If you don't know something, admit it rather than making up information.",
             },
             {
               role: "user",
-              content: `Please summarize this Sui Improvement Proposal in plain English, explaining what it does and its potential impact on the Sui ecosystem:\n\n${text}`,
+              content: `${text}`,
             },
           ],
           max_tokens: 200,

@@ -5,6 +5,7 @@ import { HeroGeometric } from "@/components/ui/shape-landing-hero"
 import { SipList } from "@/components/sip-list"
 import { StatisticsCards } from "@/components/statistics-cards"
 import { FiltersSection } from "@/components/filters-section"
+import { Chatbot } from "@/components/chatbot"
 import { categories } from "@/lib/data"
 import { getCategoriesForSip } from "@/lib/utils"
 
@@ -164,6 +165,9 @@ export default function Home() {
           <SipList sips={filteredSips} loading={loading} error={error} />
         </div>
       </div>
+      
+      {/* Chatbot */}
+      <Chatbot />
     </div>
   )
 }
