@@ -11,6 +11,7 @@ import { fetchPRDetailsCached as fetchSipDetailsCached, fetchPRCommentsCached as
 import { MarkdownRenderer } from "@/components/ui/markdown-renderer"
 import { SipDiscussion } from "@/components/sip-discussion"
 import { AISummary } from "@/components/ai-summary"
+import { DiscussionSummary } from "@/components/discussion-summary"
 
 interface SipPageProps {
   params: {
@@ -122,6 +123,12 @@ export default async function SipPage({ params }: SipPageProps) {
           
           {/* Comments section */}
           <div className="mt-10 pt-6 border-t">
+            {/* Discussion Summary - only shows if there are comments */}
+            {comments.length > 0 && (
+              <div className="mb-8">
+                <DiscussionSummary sipId={id} commentCount={comments.length} />
+              </div>
+            )}
             <SipDiscussion comments={comments} />
           </div>
         </div>

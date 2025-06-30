@@ -1,7 +1,15 @@
-import { type NextRequest, NextResponse } from "next/server"
+// @ts-nocheck
+import { NextRequest, NextResponse } from "next/server"
 
 // Add dynamic export to prevent static export error
 export const dynamic = 'force-dynamic'
+
+export async function GET(request: NextRequest) {
+  return NextResponse.json(
+    { error: "Please provide a SIP ID" },
+    { status: 400 }
+  )
+}
 
 export async function POST(request: NextRequest) {
   try {

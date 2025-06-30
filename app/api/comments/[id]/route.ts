@@ -7,10 +7,10 @@ export const dynamic = 'force-dynamic'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  context: { params: { id: string } }
 ) {
   try {
-    const { id } = params
+    const { id } = context.params
     console.log(`API route: Fetching comments for SIP ${id}...`)
     
     // Try to fetch from GitHub API
