@@ -94,13 +94,18 @@ export default function Home() {
   // Filter SIPs based on search query, selected labels, status, and categories
   const filteredSips = useMemo(() => {
     return sips.filter((sip) => {
-      // Search filter - searches in title, body, author, and labels
+      // Search filter - searches in title, body, author, labels, and SIP number
       const searchMatch =
         searchQuery === "" ||
         sip.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
         (sip.body && sip.body.toLowerCase().includes(searchQuery.toLowerCase())) ||
         sip.user.login.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        sip.labels.some((label) => label.name.toLowerCase().includes(searchQuery.toLowerCase()))
+        sip.labels.some((label) => label.name.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        // Match SIP number - convert both to strings for comparison
+        sip.number.toString() === searchQuery.trim() ||
+        // Also match "SIP-XX" or "#XX" format
+        `sip-${sip.number}` === searchQuery.toLowerCase().trim() ||
+        `#${sip.number}` === searchQuery.toLowerCase().trim()
 
       // Label filter - matches if any selected label is present
       const labelMatch =

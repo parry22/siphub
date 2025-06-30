@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server"
 import { fetchAllSips } from "@/lib/github-api"
 
+// Add dynamic export to prevent static export error
+export const dynamic = 'force-dynamic'
+
 export async function GET(request: NextRequest) {
   try {
     console.log("API route: Starting to fetch SIPs...")

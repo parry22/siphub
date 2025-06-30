@@ -2,6 +2,9 @@
 import { NextRequest, NextResponse } from "next/server"
 import { fetchSipContent, extractSipDescription } from "@/lib/github-api"
 
+// Add dynamic export to prevent static export error
+export const dynamic = 'force-dynamic'
+
 export async function GET(
   request: NextRequest,
   { params }: { params: { id: string } }

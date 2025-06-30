@@ -2,6 +2,9 @@
 import { NextRequest, NextResponse } from "next/server"
 import { fetchPRDetailsCached, fetchSipContentCached } from "@/lib/github-api"
 
+// Add dynamic export to prevent static export error
+export const dynamic = 'force-dynamic'
+
 // Use environment variable instead of hardcoded API key
 const GROQ_API_KEY = process.env.GROQ_API_KEY || ""
 

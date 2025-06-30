@@ -18,8 +18,7 @@ interface SipPageProps {
 }
 
 export async function generateMetadata({ params }: SipPageProps): Promise<Metadata> {
-  const id = params.id
-  const sipDetails = await fetchSipDetailsCached(id)
+  const sipDetails = await fetchSipDetailsCached(params.id)
   
   if (!sipDetails) {
     return {
@@ -35,12 +34,10 @@ export async function generateMetadata({ params }: SipPageProps): Promise<Metada
 }
 
 export default async function SipPage({ params }: SipPageProps) {
-  const id = params.id
-  
   // Fetch all data in parallel
-  const prPromise = fetchSipDetailsCached(id)
-  const commentsPromise = fetchCommentsCached(id)
-  const contentPromise = fetchSipContentCached(id)
+  const prPromise = fetchSipDetailsCached(params.id)
+  const commentsPromise = fetchCommentsCached(params.id)
+  const contentPromise = fetchSipContentCached(params.id)
   
   // Wait for all promises to resolve
   const [pr, comments, content] = await Promise.all([
@@ -91,7 +88,7 @@ export default async function SipPage({ params }: SipPageProps) {
           
           {/* AI Summary */}
           <div className="py-4">
-            <AISummary sipId={id} />
+            <AISummary sipId={params.id} />
           </div>
           
           {/* Content */}
